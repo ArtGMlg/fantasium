@@ -1,0 +1,3 @@
+fastapi[standard]
+setuptools-rust
+git+https://github.com/openai/whisper.git

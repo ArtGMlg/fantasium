@@ -1,10 +1,11 @@
 import base64
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 from models.illustrator_prompt import IllBody
 from pydantic import BaseModel
 from illustrator import Text2ImageAPI
+from transcriber import Transcriber
 
 app = FastAPI()
 
@@ -15,6 +16,9 @@ app.add_middleware(
     allow_headers=["*"],
     allow_credentials=True
 )
+
+
+t = Transcriber()
 
 # Redirect / -> Swagger-UI documentation
 @app.get("/")
@@ -37,3 +41,14 @@ async def send_illustator(model: IllBody):
 
     print("Image saved as output_image.jpg")
     return ''
+
+@app.post('/transcribe')
+async def upload_file(file: UploadFile = File()):
+  context = await file.read()
+  
+  with open('temp_file.wav', 'wb') as temp_file:
+    temp_file.write(context)
+    
+  result = t.process('temp_file.wav')
+  
+  return {"transcription": result}
