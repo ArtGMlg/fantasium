@@ -1,10 +1,11 @@
 import json
+import os
 import requests
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 import base64
-
+from dotenv import load_dotenv
 from text_to_speech import TtsModel
 from chat_tokener import Tokener
 from models.schemas import Message
@@ -15,8 +16,12 @@ app = FastAPI()
 tokener = Tokener()
 ttsmodel = TtsModel()
 transcribe = Transcriber()
-#TODO выкинуть в .env
-api = Text2ImageAPI('https://api-key.fusionbrain.ai/', 'F847186AE65345C881E17DA1677DDE20', '454F6AFF45FCD99661D322872774111E')
+
+dotenv_path = os.path.join(os.path.dirname(__file__), 'envs/key.env')
+load_dotenv(dotenv_path)
+API_KEY = os.environ.get('API_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+api = Text2ImageAPI('https://api-key.fusionbrain.ai/', API_KEY, SECRET_KEY)
 model_id = api.get_model()
 
 app.add_middleware(
@@ -85,11 +90,8 @@ def generate_complete(message: Message):
     }
 
 @app.post("/illustrator")
-async def send_illustator(model: Message):
-    api = Text2ImageAPI('https://api-key.fusionbrain.ai/', 'F847186AE65345C881E17DA1677DDE20',
-                        '454F6AFF45FCD99661D322872774111E')
-    model_id = api.get_model()
-    uuid = api.generate(model.sentence, model_id)
+def send_illustator(model: Message):
+    uuid = api.generate(model.message, model_id)
     images = api.check_generation(uuid)
 
     return {"image": images[0]}
