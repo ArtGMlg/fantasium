@@ -12,7 +12,8 @@ class Text2ImageAPI:
             'X-Key': f'Key {api_key}',
             'X-Secret': f'Secret {secret_key}',
         }
-        self.base_prompts = ["Создать изображение, изображающее сцену из детской сказки с яркими цветами и абстрактными формами. Включить элементы, такие как волшебные существа."]
+        self.base_prompts = [
+            "Создать изображение, изображающее сцену из детской сказки с яркими цветами и абстрактными формами. Включить элементы, такие как волшебные существа."]
 
     def get_model(self):
         response = requests.get(self.URL + 'key/api/v1/models', headers=self.AUTH_HEADERS)
@@ -22,7 +23,7 @@ class Text2ImageAPI:
     def generate(self, prompt, model, images=1, width=512, height=384):
         # Include previous prompts in the current prompt
         full_prompt = " ".join(self.base_prompts + [prompt])
-#         self.previous_prompts.append(prompt)  # Store the current prompt
+        #         self.previous_prompts.append(prompt)  # Store the current prompt
 
         params = {
             "type": "GENERATE",
@@ -53,4 +54,3 @@ class Text2ImageAPI:
 
             attempts -= 1
             time.sleep(delay)
-
