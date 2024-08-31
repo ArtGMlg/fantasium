@@ -35,12 +35,14 @@ async def send_illustator(model: IllBody):
     model_id = api.get_model()
     uuid = api.generate(model.sentence, model_id)
     images = api.check_generation(uuid)
-    image_data = base64.b64decode(images[0])
-    with open('output_image.jpg', 'wb') as image_file:
-        image_file.write(image_data)
+    #--------тут я просто смотрел, что картинка генериться, сохранял её------------#
+    # image_data = base64.b64decode(images[0])
+    # with open('output_image.jpg', 'wb') as image_file:
+    #     image_file.write(image_data)
 
-    print("Image saved as output_image.jpg")
-    return ''
+    # print("Image saved as output_image.jpg")
+    #-------------------------------------------------------------------------------#
+    return {"image": images[0]}
 
 @app.post('/transcribe')
 async def upload_file(file: UploadFile = File()):
