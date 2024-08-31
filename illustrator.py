@@ -20,7 +20,7 @@ class Text2ImageAPI:
         data = response.json()
         return data[0]['id']
 
-    def generate(self, prompt, model, images=1, width=512, height=384):
+    def generate(self, prompt, model, images=1, width=384, height=256):
         # Include previous prompts in the current prompt
         full_prompt = " ".join(self.base_prompts + [prompt])
         #         self.previous_prompts.append(prompt)  # Store the current prompt

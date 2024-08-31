@@ -31,7 +31,7 @@ class Tokener:
         self.token = response_data['access_token']
         self.token_end_time = datetime.datetime.fromtimestamp(response.json()["expires_at"]/1000)
 
-    def get_token(self, ):
-        if self.token == None or (self.token_end_time - datetime.datetime.now()) <= datetime.datetime(second=180):
+    def get_token(self,):
+        if self.token == None or datetime.datetime.now() >= self.token_end_time:
             self.get_access_token()
         return self.token
