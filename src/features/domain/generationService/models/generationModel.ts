@@ -5,6 +5,9 @@ export interface GenerationRequest {
 
 export interface GenerationResponse {
   story: string
-  audio: string
+  transcription: string
+}
+
+export interface IllustratorResponse {
   image: string
 }

@@ -1,13 +1,12 @@
+<!-- eslint-disable max-len -->
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
-  <div class="sider-btn">
+  <div @click="redirect" class="sider-btn" :class="{'unfocused': router.currentRoute.value.path !== to}">
     <div class="sider-btn__icon">
       <img :src="iconPath" alt="si">
     </div>
     <span :class="[
       'additional-text',
-      {
-        'additional-text__show': siderHovered
-      }
     ]"
     >
       {{ text }}
@@ -17,14 +16,26 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  siderHovered: boolean,
+import { useRouter } from 'vue-router'
+
+const props = defineProps<{
   iconPath: string,
-  text?: string
+  text?: string,
+  to: string
 }>()
+
+const router = useRouter()
+
+const redirect = () => {
+  router.push(props.to)
+}
 </script>
 
 <style scoped lang="scss">
+.unfocused {
+  opacity: .4;
+}
+
 .sider-btn {
   width: 100%;
   height: 68px;
@@ -38,10 +49,13 @@ defineProps<{
 
   &__icon {
     margin-left: 14px;
+    min-width: 36px;
+    max-width: 36px;
   }
 
   &:hover {
     cursor: pointer;
+    opacity: 1;
 
     .layer {
       width: 336px;
@@ -53,11 +67,7 @@ defineProps<{
   color: black;
   font-size: 24px;
   margin-left: 38px;
-  display: none;
-
-  &__show {
-    display: initial;
-  }
+  white-space: nowrap;
 }
 
 .layer {

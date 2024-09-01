@@ -14,10 +14,11 @@ defineProps<{
 .out-message {
   width: fit-content;
   padding: 24px;
-  max-width: 50%;
+  max-width: 45%;
   background-color: #e5e5e5;
   margin-left: auto;
   border-radius: 32px;
+  text-align: start;
 
   &__text {
     line-height: normal;

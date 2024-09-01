@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center">
-    <a-input :style="inputStyle" v-model="msg"></a-input>
-    <send-btn @get-voice="sendMessage" @send="sendMessage"></send-btn>
+    <a-input :style="inputStyle" v-model:value="msg"></a-input>
+    <send-btn @get-voice="sendMessage" @send="sendMessage" :msg-empty="!msg"></send-btn>
   </div>
 </template>
 
@@ -13,16 +13,19 @@ const inputStyle: CSSProperties = {
   height: '77px',
   borderRadius: '35px',
   marginRight: '28px',
+  fontSize: '16px',
 }
+
+// eslint-disable-next-line no-spaced-func, func-call-spacing
+const emit = defineEmits<{
+  (event: 'input', value: string): void
+}>()
 
 const msg = ref<string>('')
 
 const sendMessage = (text: string | null) => {
-  if (!text) {
-    // TODO отправка msg на эндпоинт генерации
-  } else {
-    // TODo отправка text на эндпоинт генерации
-  }
+  emit('input', text || msg.value)
+  msg.value = ''
 }
 </script>
 

@@ -4,8 +4,8 @@ import { createStore, GetterTree, Store } from 'vuex'
 export interface ChatMessage {
   type: 'incoming' | 'outcoming'
   content: string
-  voiceover?: unknown
-  illustration?: unknown
+  voiceover?: string
+  illustration?: string
 }
 export interface State {
   transcription: string,

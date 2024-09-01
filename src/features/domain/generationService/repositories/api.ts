@@ -1,11 +1,13 @@
+/* eslint-disable max-len */
 import AjaxService from '@/features/core/ajax/service'
 import { GenerateRepository } from './interface'
-import { GenerationRequest, GenerationResponse } from '../models/generationModel'
+import { GenerationRequest, GenerationResponse, IllustratorResponse } from '../models/generationModel'
+import { exportGeneration } from './converters'
 
 export default class GenerateApiRepository implements GenerateRepository {
   private ajaxService: AjaxService
 
-  private baseUrl = '/generate_story'
+  private baseUrl = '/generate_complete'
 
   constructor ({ ajaxService }: {
     ajaxService: AjaxService
@@ -13,10 +15,15 @@ export default class GenerateApiRepository implements GenerateRepository {
     this.ajaxService = ajaxService
   }
 
-  // eslint-disable-next-line max-len
   public generate: (source: GenerationRequest) => Promise<GenerationResponse> = (source: GenerationRequest) => this.ajaxService.post({
     url: this.baseUrl,
-    data: source,
+    data: exportGeneration(source),
+  })
+    .then((res) => res)
+
+  public getIllustration: (source: GenerationRequest) => Promise<IllustratorResponse> = (source) => this.ajaxService.post({
+    url: '/illustrator',
+    data: exportGeneration(source),
   })
     .then((res) => res)
 }

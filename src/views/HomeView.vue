@@ -25,7 +25,6 @@ const contentStyle: CSSProperties = {
   backgroundColor: '#F5F5F5',
   paddingLeft: '100px',
 }
-
 </script>
 
 <style scoped lang="scss">
@@ -37,6 +36,8 @@ const contentStyle: CSSProperties = {
   width: 112px!important;
   padding: 32px 22px;
   background: linear-gradient(180deg, rgba(255,221,45,1) 0%, rgba(255,241,171,1) 100%);
+  z-index: 20;
+  overflow: hidden;
 
   &:hover {
     width: 380px!important;

@@ -1,4 +1,5 @@
 import { GenerationRequest } from './models/generationModel'
+import { importGeneration, importIllustration } from './repositories/converters'
 import { GenerateRepository } from './repositories/interface'
 
 export default class GenerateService {
@@ -11,6 +12,10 @@ export default class GenerateService {
   }
 
   public generate (source: GenerationRequest) {
-    return this.repository.generate(source)
+    return this.repository.generate(source).then(importGeneration)
+  }
+
+  public getIllustration (source: GenerationRequest) {
+    return this.repository.getIllustration(source).then(importIllustration)
   }
 }
