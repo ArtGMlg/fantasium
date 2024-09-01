@@ -9,6 +9,7 @@ from fantasium.schemas import Message
 from fantasium.illustrator import Text2ImageAPI
 from fantasium.transcriber import Transcriber
 from fantasium.writer import GigachatInference
+from fantasium.filter import Filter
 from settings import Settings
 
 app = FastAPI()
@@ -17,6 +18,7 @@ tokener = Tokener(settings.Gigachat_KEY)
 ttsmodel = TtsModel()
 chatmodel = GigachatInference(settings.Story_len)
 transcribe = Transcriber()
+filter = Filter()
 image_api = Text2ImageAPI('https://api-key.fusionbrain.ai/', settings.Kandinsky_API_KEY, settings.Kandinsky_SECRET_KEY)
 model_id = image_api.get_model()
 
@@ -40,6 +42,7 @@ def main_function():
 
 @app.post("/generate_complete")
 def generate_complete(message: Message):
+    message = filter.filter_request(message)
     token = tokener.get_token()
     story_content, end_of_story = chatmodel.get_text(message.message, message.chat_id, token)
     audio_data = ttsmodel.get_audio(story_content)
@@ -52,7 +55,7 @@ def generate_complete(message: Message):
 
 @app.post("/illustrator")
 def send_illustator(model: Message):
-    uuid = image_api.generate(model.message, model_id)
+    uuid = image_api.generate(filter.filter_request(model.message), model_id)
     images = image_api.check_generation(uuid)
 
     return {"image": images[0]}

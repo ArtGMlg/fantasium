@@ -1,4 +1,4 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 class EnvSettings(BaseSettings):
     ENV_FILE: str = "envs/key.env"
  

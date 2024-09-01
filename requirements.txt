@@ -3,4 +3,7 @@ setuptools-rust
 python-dotenv
 torch
 pydantic
+pydantic-settings
+razdel
+navec
 git+https://github.com/openai/whisper.git
