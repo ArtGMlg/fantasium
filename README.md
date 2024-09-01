@@ -20,7 +20,8 @@
    ```
       pip install -r requirements.txt
    ```
-
+5. Скачать файл libomp140.x86_64.dll и поместить его в 'C:\Windows\System32'
+https://www.dllme.com/dll/files/libomp140_x86_64/00637fe34a6043031c9ae4c6cf0a891d/download
 
 Для работы также понадобится установить ffmpeg:
 
