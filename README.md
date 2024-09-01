@@ -1,20 +1,26 @@
 # fantasium
 
 1. Создать окружение
+
    ```
    python -m venv .venv
    ```
 2. Активировать
+
    ```
    ./.venv/Scripts/activate
    ```
 3. Установить torch
+
    ```
    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
    ```
+4. Установить зависимостb
 
-4. Скачать файл libomp140.x86_64.dll и поместить его в 'C:\Windows\System32'
-https://www.dllme.com/dll/files/libomp140_x86_64/00637fe34a6043031c9ae4c6cf0a891d/download
+   ```
+      pip install -r requirements.txt
+   ```
+
 
 Для работы также понадобится установить ffmpeg:
 
@@ -25,3 +31,4 @@ https://www.dllme.com/dll/files/libomp140_x86_64/00637fe34a6043031c9ae4c6cf0a891
 ```
 where python
 ```
+Также для работы понадобится .env файл, в котором будут находится ключи для api, необхлдимые поля см. settings.py

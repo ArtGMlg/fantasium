@@ -1,6 +1,5 @@
 import json
 import time
-import base64
 import requests
 
 
@@ -13,17 +12,17 @@ class Text2ImageAPI:
             'X-Secret': f'Secret {secret_key}',
         }
         self.base_prompts = [
-            "Создать изображение, изображающее сцену из детской сказки с яркими цветами и абстрактными формами. Включить элементы, такие как волшебные существа."]
+            "Создай изображение, изображающее сцену из детской сказки с яркими цветами и абстрактными формами. Включи элементы, такие как волшебные существа. Изображение должно подходить к данному фрагменту сказки: "]
 
     def get_model(self):
         response = requests.get(self.URL + 'key/api/v1/models', headers=self.AUTH_HEADERS)
         data = response.json()
+        print(data)
         return data[0]['id']
 
     def generate(self, prompt, model, images=1, width=384, height=256):
         # Include previous prompts in the current prompt
         full_prompt = " ".join(self.base_prompts + [prompt])
-        #         self.previous_prompts.append(prompt)  # Store the current prompt
 
         params = {
             "type": "GENERATE",

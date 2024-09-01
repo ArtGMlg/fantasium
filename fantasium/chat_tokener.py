@@ -1,19 +1,12 @@
 import datetime
 import uuid
 import requests
-import os
-from os.path import join, dirname
-from dotenv import load_dotenv
-
-
-dotenv_path = os.path.join(os.path.dirname(__file__), 'envs/key.env')
-load_dotenv(dotenv_path)
-KEY = os.environ.get('KEY')
 
 class Tokener:
-    def __init__(self,):
+    def __init__(self, api_key):
         self.token = None
         self.token_end_time = None
+        self.api_key = api_key
 
     def get_access_token(self,):
         url = "https://ngw.devices.sberbank.ru:9443/api/v2/oauth"
@@ -22,7 +15,7 @@ class Tokener:
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json',
             'RqUID': str(uuid.uuid4()),
-            'Authorization': f'Basic {KEY}'
+            'Authorization': f'Basic {self.api_key}'
         }
 
         response = requests.request("POST", url, headers=headers, data=payload, verify=False)

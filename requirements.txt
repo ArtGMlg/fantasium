@@ -1,9 +1,6 @@
 fastapi[standard]
 setuptools-rust
 python-dotenv
-logmmse
-numpy
-scipy
 torch
 pydantic
 git+https://github.com/openai/whisper.git
